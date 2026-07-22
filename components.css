@@ -1,0 +1,407 @@
+/*
+ * EEA Design System — Components
+ * Version: 1.0.0
+ *
+ * Depends on: tokens.css (must be loaded first)
+ *
+ * Plain-HTML component classes.
+ * These are framework-agnostic — usable in any static HTML page.
+ *
+ * Contents:
+ *   1. Card
+ *   2. Icon chip
+ *   3. Tag / Badge
+ *   4. Button
+ *   5. Section label
+ *   6. Footer
+ *   7. Hero
+ *   8. Grid layouts
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   1. CARD
+   .eea-card                — standard card
+   .eea-card--accent        — top accent bar (uses --eea-card-accent to set bar color)
+   .eea-card--interactive   — hover lift + border highlight
+═══════════════════════════════════════════════════════════ */
+.eea-card {
+  position: relative;
+  background: var(--eea-bg-card);
+  border: 1px solid var(--eea-border);
+  border-radius: var(--eea-radius-md);
+  padding: var(--eea-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--eea-space-3);
+}
+
+/* Accent bar on top edge — set --eea-card-accent on the element */
+.eea-card--accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--eea-card-accent, var(--eea-accent));
+  border-radius: var(--eea-radius-md) var(--eea-radius-md) 0 0;
+}
+
+/* Interactive card — hover lift + accent border */
+.eea-card--interactive {
+  cursor: pointer;
+  transition:
+    border-color var(--eea-transition-base),
+    transform var(--eea-transition-base),
+    box-shadow var(--eea-transition-base);
+}
+
+.eea-card--interactive:hover {
+  border-color: var(--eea-accent);
+  transform: translateY(-3px);
+  box-shadow: var(--eea-shadow-lg);
+}
+
+.eea-card--interactive:active {
+  transform: translateY(-1px);
+}
+
+/* Light theme overrides */
+[data-theme="light"] .eea-card {
+  box-shadow: var(--eea-shadow-sm);
+}
+
+/* Card sub-elements */
+.eea-card-title {
+  font-size: var(--eea-text-lg);
+  font-weight: var(--eea-weight-semi);
+  color: var(--eea-text);
+  margin: 0;
+  line-height: var(--eea-leading-snug);
+}
+
+.eea-card-desc {
+  font-size: var(--eea-text-sm);
+  color: var(--eea-text-2);
+  line-height: var(--eea-leading-base);
+  margin: 0;
+  flex: 1;
+}
+
+.eea-card-footer {
+  margin-top: auto;
+  padding-top: var(--eea-space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--eea-space-2);
+}
+
+/* Arrow link inside card */
+.eea-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--eea-accent);
+  font-size: 0.9rem;
+  font-weight: var(--eea-weight-medium);
+  transition: gap var(--eea-transition-base);
+  text-decoration: none;
+}
+
+.eea-card-link:hover {
+  gap: 10px;
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   2. ICON CHIP
+   Small tinted container for a stroke SVG icon.
+   Usage: <div class="eea-icon-chip"><svg>…</svg></div>
+═══════════════════════════════════════════════════════════ */
+.eea-icon-chip {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--eea-radius-sm);
+  background: var(--eea-accent-bg);
+  color: var(--eea-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.eea-icon-chip svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* Size variants */
+.eea-icon-chip--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.eea-icon-chip--sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.eea-icon-chip--lg {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--eea-radius-md);
+}
+
+.eea-icon-chip--lg svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3. TAG / BADGE
+   .eea-tag               — neutral tag
+   .eea-tag--accent       — accent-colored tag
+   .eea-tag--success      — success / active
+   .eea-tag--warning      — warning
+   .eea-tag--danger       — danger / error
+   .eea-badge             — pill-shaped (rounded-full)
+═══════════════════════════════════════════════════════════ */
+.eea-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--eea-space-1);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--eea-radius-sm);
+  font-size: var(--eea-text-xs);
+  font-weight: var(--eea-weight-medium);
+  line-height: 1;
+  background: var(--eea-bg-raised);
+  color: var(--eea-text-2);
+  border: 1px solid var(--eea-border);
+  white-space: nowrap;
+}
+
+.eea-tag--accent {
+  background: var(--eea-accent-bg);
+  color: var(--eea-accent-hover);
+  border-color: rgba(98, 126, 234, 0.25);
+}
+
+.eea-tag--success {
+  background: var(--eea-success-bg);
+  color: var(--eea-success);
+  border-color: rgba(0, 212, 170, 0.25);
+}
+
+.eea-tag--warning {
+  background: var(--eea-warning-bg);
+  color: var(--eea-warning);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+.eea-tag--danger {
+  background: var(--eea-danger-bg);
+  color: var(--eea-danger);
+  border-color: rgba(255, 107, 107, 0.25);
+}
+
+.eea-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--eea-radius-pill);
+  font-size: var(--eea-text-xs);
+  font-weight: var(--eea-weight-semi);
+  background: var(--eea-accent-bg);
+  color: var(--eea-accent-hover);
+  border: 1px solid rgba(98, 126, 234, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   4. BUTTON
+   .eea-btn               — base
+   .eea-btn--primary      — filled accent
+   .eea-btn--secondary    — outlined
+   .eea-btn--ghost        — transparent / text-only
+   .eea-btn--sm           — smaller variant
+═══════════════════════════════════════════════════════════ */
+.eea-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--eea-space-2);
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--eea-radius-sm);
+  font-family: var(--eea-font);
+  font-size: var(--eea-text-sm);
+  font-weight: var(--eea-weight-medium);
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition:
+    background var(--eea-transition-fast),
+    border-color var(--eea-transition-fast),
+    color var(--eea-transition-fast),
+    box-shadow var(--eea-transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.eea-btn:disabled,
+.eea-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Filled primary */
+.eea-btn--primary {
+  background: var(--eea-accent);
+  color: #fff;
+  border-color: var(--eea-accent);
+}
+
+.eea-btn--primary:hover {
+  background: var(--eea-accent-hover);
+  border-color: var(--eea-accent-hover);
+  text-decoration: none;
+}
+
+/* Outlined secondary */
+.eea-btn--secondary {
+  background: transparent;
+  color: var(--eea-text-2);
+  border-color: var(--eea-border-solid);
+}
+
+.eea-btn--secondary:hover {
+  color: var(--eea-text);
+  border-color: var(--eea-text-3);
+  background: var(--eea-bg-hover);
+  text-decoration: none;
+}
+
+/* Ghost / text */
+.eea-btn--ghost {
+  background: transparent;
+  color: var(--eea-accent);
+  border-color: transparent;
+}
+
+.eea-btn--ghost:hover {
+  background: var(--eea-accent-bg);
+  text-decoration: none;
+}
+
+/* Size modifier */
+.eea-btn--sm {
+  padding: 0.35rem 0.75rem;
+  font-size: var(--eea-text-xs);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. SECTION LABEL
+   Eyebrow text above headings.
+   Usage: <p class="eea-label">Working Group</p>
+═══════════════════════════════════════════════════════════ */
+.eea-label {
+  font-size: var(--eea-text-xs);
+  font-weight: var(--eea-weight-semi);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eea-accent);
+  margin: 0 0 var(--eea-space-2) 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   6. FOOTER
+   .eea-footer            — page footer
+═══════════════════════════════════════════════════════════ */
+.eea-footer {
+  margin-top: var(--eea-space-16);
+  padding: var(--eea-space-8) var(--eea-container-px);
+  border-top: 1px solid var(--eea-border);
+  text-align: center;
+  font-size: var(--eea-text-xs);
+  color: var(--eea-text-3);
+}
+
+.eea-footer a {
+  color: var(--eea-accent);
+}
+
+.eea-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   7. HERO
+   .eea-hero              — full-width hero section
+   .eea-hero-title        — H1 inside hero
+   .eea-hero-sub          — subtitle / description
+═══════════════════════════════════════════════════════════ */
+.eea-hero {
+  padding: var(--eea-space-16) var(--eea-container-px) var(--eea-space-12);
+  text-align: center;
+}
+
+.eea-hero-title {
+  font-size: var(--eea-text-3xl);
+  font-weight: var(--eea-weight-bold);
+  line-height: var(--eea-leading-tight);
+  color: var(--eea-text);
+  margin: 0 0 var(--eea-space-4) 0;
+}
+
+.eea-hero-title em {
+  font-style: normal;
+  color: var(--eea-accent);
+}
+
+.eea-hero-sub {
+  font-size: 1.1rem;
+  color: var(--eea-text-2);
+  line-height: var(--eea-leading-base);
+  max-width: 600px;
+  margin: 0 auto var(--eea-space-8);
+}
+
+@media (max-width: 768px) {
+  .eea-hero { padding: var(--eea-space-12) var(--eea-container-px-sm) var(--eea-space-8); }
+  .eea-hero-title { font-size: var(--eea-text-2xl); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   8. GRID LAYOUTS
+   .eea-grid              — standard card grid
+   .eea-grid--3           — 3-column variant
+   .eea-grid--2           — 2-column variant
+═══════════════════════════════════════════════════════════ */
+.eea-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--eea-gap-md);
+}
+
+.eea-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.eea-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 900px) {
+  .eea-grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .eea-grid--3,
+  .eea-grid--2 { grid-template-columns: 1fr; }
+}

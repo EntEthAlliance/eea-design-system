@@ -1,0 +1,168 @@
+/*
+ * EEA Design System — Tokens
+ * Version: 1.0.0
+ * Source: https://github.com/EntEthAlliance/eea-design-system
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/tokens.css">
+ *
+ * All tokens are prefixed --eea- to avoid collisions with site-local variables.
+ * Sites import these tokens and map them to their own var() references as needed.
+ */
+
+/* ─────────────────────────────────────────────────────────────
+   DARK THEME (default)
+───────────────────────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+
+  /* Background scale */
+  --eea-bg:             #0a0a0f;   /* page root */
+  --eea-bg-raised:      #12121a;   /* slightly elevated surface */
+  --eea-bg-card:        #1a1a24;   /* card background */
+  --eea-bg-hover:       #22222e;   /* hover state on interactive surfaces */
+
+  /* Text scale */
+  --eea-text:           #ffffff;
+  --eea-text-2:         #a0a0b0;   /* secondary / descriptions */
+  --eea-text-3:         #6a6a7a;   /* muted / timestamps / labels */
+
+  /* Border */
+  --eea-border:         rgba(255, 255, 255, 0.08);   /* translucent — works on any dark surface */
+  --eea-border-solid:   #2a2a3a;                     /* solid equivalent for sharp edges */
+
+  /* Accent */
+  --eea-accent:         #627eea;
+  --eea-accent-hover:   #8fa8ff;
+  --eea-accent-bg:      rgba(98, 126, 234, 0.12);    /* tinted chip / icon background */
+  --eea-accent-bg-light:rgba(98, 126, 234, 0.06);    /* subtler accent fill */
+
+  /* Semantic */
+  --eea-success:        #00d4aa;
+  --eea-success-bg:     rgba(0, 212, 170, 0.12);
+  --eea-warning:        #fbbf24;
+  --eea-warning-bg:     rgba(251, 191, 36, 0.12);
+  --eea-danger:         #ff6b6b;
+  --eea-danger-bg:      rgba(255, 107, 107, 0.12);
+  --eea-info:           #00b4d8;
+  --eea-info-bg:        rgba(0, 180, 216, 0.12);
+
+  /* Shadows */
+  --eea-shadow-sm:      0 1px 4px rgba(0, 0, 0, 0.20);
+  --eea-shadow-md:      0 4px 12px rgba(0, 0, 0, 0.25);
+  --eea-shadow-lg:      0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LIGHT THEME
+   Applied when html[data-theme="light"]
+───────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+
+  /* Background scale */
+  --eea-bg:             #f8f9fc;
+  --eea-bg-raised:      #f0f1f5;
+  --eea-bg-card:        #ffffff;
+  --eea-bg-hover:       #eceef4;
+
+  /* Text scale */
+  --eea-text:           #0f0f14;
+  --eea-text-2:         #4a4a5a;
+  --eea-text-3:         #8a8a9a;
+
+  /* Border */
+  --eea-border:         rgba(0, 0, 0, 0.08);
+  --eea-border-solid:   #d8dae8;
+
+  /* Accent (same hue, slightly adjusted alpha fills) */
+  --eea-accent:         #627eea;
+  --eea-accent-hover:   #4a66d8;
+  --eea-accent-bg:      rgba(98, 126, 234, 0.08);
+  --eea-accent-bg-light:rgba(98, 126, 234, 0.04);
+
+  /* Shadows */
+  --eea-shadow-sm:      0 1px 4px rgba(15, 15, 20, 0.06);
+  --eea-shadow-md:      0 4px 12px rgba(15, 15, 20, 0.08);
+  --eea-shadow-lg:      0 12px 32px rgba(15, 15, 20, 0.10);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TYPOGRAPHY TOKENS
+   These are theme-independent.
+───────────────────────────────────────────────────────────── */
+:root {
+
+  /* Font stacks */
+  --eea-font:           'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --eea-font-mono:      'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Google Fonts import URLs (reference — link these in <head>):
+   * Sans:  https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap
+   * Mono:  https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap
+   */
+
+  /* Scale (rem, base 16px) */
+  --eea-text-xs:        0.75rem;    /* 12px — labels, captions */
+  --eea-text-sm:        0.875rem;   /* 14px — secondary copy */
+  --eea-text-base:      1rem;       /* 16px — body */
+  --eea-text-lg:        1.125rem;   /* 18px — card titles */
+  --eea-text-xl:        1.5rem;     /* 24px — section headings */
+  --eea-text-2xl:       2rem;       /* 32px — page subheadings */
+  --eea-text-3xl:       2.5rem;     /* 40px — page H1 */
+
+  /* Weights */
+  --eea-weight-normal:  400;
+  --eea-weight-medium:  500;
+  --eea-weight-semi:    600;
+  --eea-weight-bold:    700;
+
+  /* Line heights */
+  --eea-leading-tight:  1.2;
+  --eea-leading-snug:   1.4;
+  --eea-leading-base:   1.6;
+  --eea-leading-loose:  1.8;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LAYOUT TOKENS
+───────────────────────────────────────────────────────────── */
+:root {
+
+  /* Container */
+  --eea-container:      1200px;     /* canonical max-width for all Tier A sites */
+  --eea-container-wide: 1400px;     /* data-heavy pages (finance, institutional) */
+  --eea-container-px:   2rem;       /* horizontal padding */
+  --eea-container-px-sm:1rem;       /* mobile horizontal padding */
+
+  /* Spacing scale (4px base) */
+  --eea-space-1:        0.25rem;    /* 4px */
+  --eea-space-2:        0.5rem;     /* 8px */
+  --eea-space-3:        0.75rem;    /* 12px */
+  --eea-space-4:        1rem;       /* 16px */
+  --eea-space-6:        1.5rem;     /* 24px */
+  --eea-space-8:        2rem;       /* 32px */
+  --eea-space-12:       3rem;       /* 48px */
+  --eea-space-16:       4rem;       /* 64px */
+
+  /* Grid gaps */
+  --eea-gap-sm:         1rem;
+  --eea-gap-md:         1.5rem;
+  --eea-gap-lg:         2rem;
+  --eea-gap-xl:         3rem;
+
+  /* Border radius */
+  --eea-radius-xs:      4px;
+  --eea-radius-sm:      6px;        /* buttons, tags, small chips */
+  --eea-radius-md:      12px;       /* cards (canonical) */
+  --eea-radius-lg:      18px;       /* larger surface cards (org-index style) */
+  --eea-radius-pill:    999px;      /* badges, pills */
+
+  /* Nav */
+  --eea-nav-height:     52px;       /* fixed nav height — pages must offset body padding-top */
+  --eea-nav-z:          99999;
+
+  /* Transitions */
+  --eea-transition-fast:0.15s ease;
+  --eea-transition-base:0.2s ease;
+  --eea-transition-slow:0.3s ease;
+}
