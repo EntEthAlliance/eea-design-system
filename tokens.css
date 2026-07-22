@@ -1,13 +1,19 @@
 /*
  * EEA Design System — Tokens
- * Version: 1.0.0
+ * Version: 1.0.0  (initial rollout 2026-07-22)
  * Source: https://github.com/EntEthAlliance/eea-design-system
+ * Governance: see DESIGN.md
  *
  * Usage:
  *   <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/tokens.css">
  *
  * All tokens are prefixed --eea- to avoid collisions with site-local variables.
  * Sites import these tokens and map them to their own var() references as needed.
+ *
+ * Adopted sites (2026-07-22):
+ *   Tier A: ops-finance, EntEthAlliance.github.io, pages-index
+ *   Tier B: wg-ethereum-institute, rnd-rwa-erc3643-eas (Shibui), ops-solution-catalog
+ *   Tier C (isolated): eea-board-portal, wg-privacy
  */
 
 /* ─────────────────────────────────────────────────────────────
