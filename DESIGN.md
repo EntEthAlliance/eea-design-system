@@ -45,9 +45,103 @@ Three tiers define how much of the design system each EEA web property adopts.
 
 ---
 
+## Editorial family
+
+> **Status: proposed.** `editorial.css` is on `main` as a library addition.
+> No site has been migrated to it, and the tier question below is unresolved.
+
+### What it is
+
+A second design language, used by EEA's published-editorial properties. It is
+not a theme of the core system, and the two are not reconcilable by tuning
+tokens:
+
+| | Core system | Editorial |
+|---|---|---|
+| Ground | Dark-first `#0a0a0f` | Light-only warm paper `#EDEAE3` |
+| Type | IBM Plex Sans / Mono | Inter / Kode Mono |
+| Accent | `#627eea` | `#1F5C4A` |
+| Edges | 12px radii, shadows | Hard rules, no shadows |
+| Theming | `data-theme` dark/light | None — light only |
+| For | App and product surfaces | Broadsheet / publication surfaces |
+
+The core system is right for tools people operate. The editorial family is
+right for things people read. Collapsing them into one would flatten both, so
+they are kept as siblings with separate files and separate prefixes.
+
+### Why it does not violate the token contract
+
+| Guarantee | How `editorial.css` stays inside it |
+|---|---|
+| Names are stable | Adds only new names; renames nothing |
+| Accent is `#627eea` | Does not touch `--eea-accent`. `--eea-ed-accent` is a different token in a different family |
+| Prefix is `--eea-` | All tokens are `--eea-ed-*` |
+| **Dark is default** | Never writes `:root`'s theme tokens and never sets `color-scheme` on `:root`. Linking the file has **no visual effect** — a page opts in with `<body class="eea-editorial">` |
+| Load-order safe | No `@import`, no network calls, no JS |
+
+The "no visual effect until opt-in" property is the important one: it is what
+lets a second family live in this repo without putting the dark default at
+risk. Any future change to `editorial.css` must preserve it.
+
+### Provenance
+
+The palette, the pillar system and its contrast reasoning originate at
+**intelligence.entethalliance.org**. Two further properties have since
+reproduced it by hand:
+
+| Property | How it carries the family today |
+|---|---|
+| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | Origin. Inline `<style>`, local names (`--page`, `--ink`, `--mid`, `--accent`) |
+| [ops-policy-friday](https://github.com/EntEthAlliance/ops-policy-friday) | Hand copy. Local names (`--paper`, `--ink`, `--shop-*`) |
+| [ops-business-scanner](https://github.com/EntEthAlliance/ops-business-scanner) | Hand copy of the copy, via PR #19 |
+
+All three ship the same site bar — same markup, same 36px mark, same three
+pillar bars, same mono links — as three independent copies. That is the
+duplication `editorial.css` is meant to end.
+
+Drift is already measurable. The mono label role (uppercase Kode Mono, used for
+every tag, badge, kicker and table head) had spread across **nine font sizes
+and nine tracking values** between the copies before being collapsed onto the
+three-step scale now in `--eea-ed-label-*` / `--eea-ed-track-*`.
+
+### Open question — tier assignment
+
+The editorial properties fit none of the three existing tiers:
+
+- **Not Tier A** — Tier A means the full core system, which is dark-first and
+  ships `.eea-unified-nav` with a theme toggle. Editorial sites are light-only
+  and use a different header.
+- **Not Tier B** — Tier B means mapping `--eea-*` core tokens into local names
+  via a bridge. Editorial sites consume none of the core tokens.
+- **Not Tier C** — Tier C is a permanent exclusion for regulatory or security
+  reasons. Nothing excludes these sites; they simply speak a different language.
+
+Two ways forward, for maintainer decision:
+
+1. **Add a Tier E — Editorial**, parallel to A/B/C, adopting `editorial.css`
+   and nothing else.
+2. **Widen Tier B** to mean "adopts a token layer from this repo", with the
+   layer named per site.
+
+Option 1 is the clearer read — the distinction is which *family* a site
+belongs to, which is a different axis from how *much* of a family it adopts.
+But this is a governance call, not a technical one, so nothing here assumes it.
+
+### Not yet done
+
+Adoption is deliberately out of scope for this change. Migrating the three
+sites onto `editorial.css` means, per site: swapping local token names for
+`--eea-ed-*`, renaming `.site-bar` → `.eea-site-bar` in markup, and removing
+the duplicated rules. Each is its own PR with its own screenshots, following
+[Adding a new site](#adding-a-new-site).
+
+---
+
 ## Token contract
 
-The following guarantees apply to all `--eea-*` tokens on `main`:
+The following guarantees apply to all core `--eea-*` tokens on `main`. The
+editorial family (`--eea-ed-*`) is a separate namespace — see
+[Editorial family](#editorial-family) for how it stays inside these rules.
 
 | Guarantee | Detail |
 |---|---|
