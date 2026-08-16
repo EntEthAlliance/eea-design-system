@@ -1,0 +1,311 @@
+/*
+ * EEA Design System — Editorial Family
+ * Version: 1.0.0
+ *
+ * Depends on: nothing. This file is standalone and does NOT require tokens.css.
+ *
+ * WHAT THIS IS
+ * ------------
+ * A second, parallel design family used by EEA's published-editorial
+ * properties. It is NOT a theme of the core system and does not override it:
+ *
+ *   core system   dark-first, IBM Plex Sans/Mono, accent #627eea,
+ *                 12px radii, shadows, app/product surfaces
+ *   editorial     light-only warm paper, Inter/Kode Mono, accent #1F5C4A,
+ *                 hard edges, no shadows, print-broadsheet surfaces
+ *
+ * The two are deliberately different languages for different jobs. Merging
+ * them would flatten both. See DESIGN.md § Editorial family.
+ *
+ * SAFE TO LINK
+ * ------------
+ * Linking this file has NO visual effect on its own — it only declares
+ * --eea-ed-* custom properties. A page opts in by putting .eea-editorial on
+ * <body>. That keeps the core contract's "dark is default" rule intact: this
+ * file never touches :root's theme tokens and never sets color-scheme on :root.
+ *
+ * Usage:
+ *   <link rel="preconnect" href="https://fonts.googleapis.com">
+ *   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ *   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kode+Mono:wght@400;500;600&display=swap">
+ *   <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/editorial.css">
+ *   <body class="eea-editorial">
+ *
+ * Provenance: values are lifted from intelligence.entethalliance.org, which is
+ * where this palette and its contrast reasoning originated. Policy Friday and
+ * ops-business-scanner currently carry their own copies under local names.
+ *
+ * Contents:
+ *   1. Surface + ink tokens
+ *   2. Pillar tokens
+ *   3. Type tokens
+ *   4. Layout tokens
+ *   5. .eea-editorial — opt-in page surface
+ *   6. .eea-site-bar — shared program header
+ *   7. .eea-colophon — shared deep-green footer
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   1. SURFACE + INK
+   Warm-gray paper, near-black ink. Light-only by design: these
+   are print surfaces, and there is no dark counterpart.
+═══════════════════════════════════════════════════════════ */
+:root {
+  --eea-ed-page:        #EDEAE3;   /* page ground */
+  --eea-ed-ground:      #F7F5F0;   /* lifted sheet, sits above --page */
+  --eea-ed-rule:        #E3DFD7;   /* filled rule / inset panel */
+  --eea-ed-line:        #DAD6CD;   /* hairline border */
+
+  --eea-ed-ink:         #16181A;   /* primary text */
+  --eea-ed-ink-soft:    #5A645E;   /* secondary text — 5.11:1 on --page */
+  --eea-ed-ink-mute:    #8A9088;   /* non-text: dotted rules, disabled marks */
+
+  --eea-ed-accent:      #1F5C4A;   /* program green — links, kickers, rules */
+  --eea-ed-accent-deep: #123A2E;   /* pressed / dense accent fills */
+
+  /* Deep-green panel — the footer/colophon ground */
+  --eea-ed-deep:        #10231E;
+  --eea-ed-deep-fg:     #C1CBC6;
+  --eea-ed-deep-mute:   #7E8B85;
+  --eea-ed-deep-link:   #F2EEE5;
+  --eea-ed-deep-hover:  #9ADCC8;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   2. PILLARS
+   The three program pillars. Each owns one colour.
+
+   RULE: pillar colours are semantic, never decorative, and never
+   text. None of the three clears 4.5:1 on --eea-ed-page, so they
+   appear as rules and marks only. Each has a darkened -ink partner
+   that IS safe for text; use that when a pillar has to be named.
+═══════════════════════════════════════════════════════════ */
+:root {
+  --eea-ed-anticipate:      #EE9BFC;
+  --eea-ed-anticipate-ink:  #794287;
+
+  --eea-ed-work:            #F3CF2B;
+  --eea-ed-work-ink:        #765A00;
+
+  --eea-ed-connect:         #FEABA0;
+  --eea-ed-connect-ink:     #9B413C;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3. TYPE
+   Inter for everything set as prose; Kode Mono for labels and data.
+
+   The label scale exists because uppercase mono labels are the most
+   repeated element in this family and the easiest to let drift — the
+   two adopting sites had spread one visual role across nine sizes and
+   nine tracking values before this was centralised.
+═══════════════════════════════════════════════════════════ */
+:root {
+  --eea-ed-font:        Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --eea-ed-font-mono:   'Kode Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Mono label scale — three steps, one role */
+  --eea-ed-label-lg:    0.75rem;   /* masthead meta, section kickers */
+  --eea-ed-label:       0.7rem;    /* default: tags, badges, chips, meta rows */
+  --eea-ed-label-sm:    0.66rem;   /* table heads, dense chips */
+
+  /* Tracking, paired with the scale above */
+  --eea-ed-track-wide:  0.2em;     /* kickers and headings */
+  --eea-ed-track:       0.14em;    /* default */
+  --eea-ed-track-tight: 0.06em;    /* labels carrying mixed-case content */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   4. LAYOUT
+   Broadsheet measure: a fixed column inside a fluid shoulder.
+═══════════════════════════════════════════════════════════ */
+:root {
+  --eea-ed-measure:     1200px;                    /* text/content column */
+  --eea-ed-measure-bar: 1560px;                    /* site-bar runs wider */
+  --eea-ed-shoulder:    clamp(1.5rem, 4vw, 4rem);  /* page gutter */
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. PAGE SURFACE — opt in with <body class="eea-editorial">
+═══════════════════════════════════════════════════════════ */
+.eea-editorial {
+  color-scheme: light;
+  background: var(--eea-ed-page);
+  color: var(--eea-ed-ink);
+  font-family: var(--eea-ed-font);
+  font-weight: 400;
+  line-height: 1.55;
+  font-feature-settings: "kern", "liga", "onum";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.eea-editorial ::selection {
+  background: var(--eea-ed-accent);
+  color: var(--eea-ed-page);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   6. SITE BAR
+   The shared program header. Currently duplicated by hand across
+   intelligence.entethalliance.org, ops-policy-friday, and
+   ops-business-scanner.
+
+   Self-contained on purpose: it declares its own gutter and grey
+   rather than borrowing the host page's, because each page tunes
+   those for its own ground and the bar must look identical on all
+   of them. --bar-mid holds 5.11:1 on --eea-ed-page.
+
+   HTML structure:
+     <header class="eea-site-bar">
+       <div class="eea-site-bar-inner">
+         <a class="eea-site-id" href="index.html">
+           <img class="eea-site-id-logo" src="eea-logo.webp" alt="EEA" width="36" height="36">
+           <span class="eea-site-id-rule" aria-hidden="true"></span>
+           <span class="eea-site-id-stack">
+             <span class="eea-site-id-name">EEA Policy Friday</span>
+             <span class="eea-site-id-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+           </span>
+         </a>
+         <nav class="eea-site-links" aria-label="Policy Friday">
+           <span aria-current="page">All editions</span>
+           <a href="catalog.html">Signal catalog</a>
+         </nav>
+       </div>
+     </header>
+
+   The current page is marked with aria-current="page" — on a <span>
+   when it is not a link, on the <a> when it is. There is no JS: unlike
+   .eea-unified-nav, the editorial bar has no theme toggle and no
+   runtime active-link detection.
+═══════════════════════════════════════════════════════════ */
+.eea-site-bar {
+  --bar-gut: clamp(24px, 4vw, 64px);
+  --bar-mid: #5A645E;
+  background: var(--eea-ed-page);
+  border-bottom: 1px solid var(--eea-ed-line);
+  position: relative;
+  z-index: 3;
+}
+.eea-site-bar-inner {
+  max-width: var(--eea-ed-measure-bar);
+  margin: 0 auto;
+  padding: 16px var(--bar-gut);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 28px;
+  flex-wrap: wrap;
+}
+
+.eea-site-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  border-bottom: 0;
+}
+.eea-site-id:hover { opacity: 0.85; }
+.eea-site-id-logo { display: block; width: 36px; height: 36px; object-fit: contain; }
+.eea-site-id-rule { width: 1px; height: 24px; background: rgba(22, 24, 26, 0.2); }
+.eea-site-id-stack { display: inline-flex; flex-direction: column; gap: 5px; }
+.eea-site-id-name {
+  font-family: var(--eea-ed-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--eea-ed-track);
+  text-transform: uppercase;
+  color: var(--bar-mid);
+}
+
+/* Pillar bars under the wordmark — marks, not text. */
+.eea-site-id-bars { display: flex; gap: 2px; }
+.eea-site-id-bars i { flex: 1; height: 3px; }
+.eea-site-id-bars i:nth-child(1) { background: var(--eea-ed-anticipate); }
+.eea-site-id-bars i:nth-child(2) { background: var(--eea-ed-work); }
+.eea-site-id-bars i:nth-child(3) { background: var(--eea-ed-connect); }
+
+.eea-site-links {
+  display: flex;
+  align-items: center;
+  gap: 8px clamp(16px, 2vw, 28px);
+  flex-wrap: wrap;
+}
+.eea-site-links a,
+.eea-site-links span[aria-current] {
+  font-family: var(--eea-ed-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bar-mid);
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.eea-site-links a:hover {
+  color: var(--eea-ed-ink);
+  border-bottom-color: var(--eea-ed-line);
+}
+.eea-site-links a[aria-current="page"],
+.eea-site-links span[aria-current="page"] {
+  color: var(--eea-ed-ink);
+  border-bottom-color: var(--eea-ed-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   7. COLOPHON
+   Deep-green closing panel. Full-bleed: place it outside the
+   page's measure container.
+
+   HTML structure:
+     <footer class="eea-colophon">
+       <div class="eea-colophon-inner">
+         <div class="eea-colophon-bars" aria-hidden="true"><i></i><i></i><i></i></div>
+         <p>… published by the <a href="…">Enterprise Ethereum Alliance</a>.</p>
+         <p class="eea-colophon-meta">© 2026 EEA</p>
+       </div>
+     </footer>
+═══════════════════════════════════════════════════════════ */
+.eea-colophon {
+  background: var(--eea-ed-deep);
+  padding: 3rem var(--eea-ed-shoulder);
+  position: relative;
+  z-index: 2;
+}
+.eea-colophon-inner {
+  max-width: var(--eea-ed-measure);
+  margin: 0 auto;
+  color: var(--eea-ed-deep-fg);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.eea-colophon-bars { display: flex; gap: 2px; margin-bottom: 1.6rem; }
+.eea-colophon-bars i { flex: 1; height: 4px; }
+.eea-colophon-bars i:nth-child(1) { background: var(--eea-ed-anticipate); }
+.eea-colophon-bars i:nth-child(2) { background: var(--eea-ed-work); }
+.eea-colophon-bars i:nth-child(3) { background: var(--eea-ed-connect); }
+.eea-colophon a {
+  color: var(--eea-ed-deep-link);
+  text-decoration: none;
+  border-bottom: 1px solid var(--eea-ed-deep-mute);
+}
+.eea-colophon a:hover {
+  color: var(--eea-ed-deep-hover);
+  border-color: var(--eea-ed-deep-hover);
+}
+.eea-colophon-meta {
+  margin-top: 1rem;
+  font-family: var(--eea-ed-font-mono);
+  font-size: var(--eea-ed-label);
+  letter-spacing: var(--eea-ed-track);
+  text-transform: uppercase;
+  color: var(--eea-ed-deep-mute);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .eea-editorial * { animation: none !important; transition: none !important; }
+}
