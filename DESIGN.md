@@ -47,8 +47,9 @@ Three tiers define how much of the design system each EEA web property adopts.
 
 ## Editorial family
 
-> **Status: proposed.** `editorial.css` is on `main` as a library addition.
-> No site has been migrated to it, and the tier question below is unresolved.
+> **Status: live** since [#3](https://github.com/EntEthAlliance/eea-design-system/pull/3)
+> (2026-08-16), served at `https://entethalliance.github.io/eea-design-system/editorial.css`.
+> The tier-assignment question below is still open.
 
 ### What it is
 
@@ -99,6 +100,14 @@ All three ship the same site bar — same markup, same 36px mark, same three
 pillar bars, same mono links — as three independent copies. That is the
 duplication `editorial.css` is meant to end.
 
+### Editorial adoption
+
+| Repo | PR | Status | What changed |
+|---|---|---|---|
+| [ops-business-scanner](https://github.com/EntEthAlliance/ops-business-scanner) | [#22](https://github.com/EntEthAlliance/ops-business-scanner/pull/22) | open | Links `editorial.css` from Pages; bridge block onto `--eea-ed-*`; canonical `.eea-site-bar` / `.eea-colophon` markup; ~160 lines of duplicated rules deleted |
+| [ops-policy-friday](https://github.com/EntEthAlliance/ops-policy-friday) | — | not started | Still carries its hand copy |
+| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | — | not started | Origin site; still inline `<style>` |
+
 Drift is already measurable. The mono label role (uppercase Kode Mono, used for
 every tag, badge, kicker and table head) had spread across **nine font sizes
 and nine tracking values** between the copies before being collapsed onto the
@@ -127,13 +136,13 @@ Option 1 is the clearer read — the distinction is which *family* a site
 belongs to, which is a different axis from how *much* of a family it adopts.
 But this is a governance call, not a technical one, so nothing here assumes it.
 
-### Not yet done
+### Remaining migrations
 
-Adoption is deliberately out of scope for this change. Migrating the three
-sites onto `editorial.css` means, per site: swapping local token names for
-`--eea-ed-*`, renaming `.site-bar` → `.eea-site-bar` in markup, and removing
-the duplicated rules. Each is its own PR with its own screenshots, following
-[Adding a new site](#adding-a-new-site).
+Migrating a site onto `editorial.css` means: swapping local token names for
+`--eea-ed-*` (bridge block), renaming `.site-bar` → `.eea-site-bar` in markup,
+and removing the duplicated rules. Each is its own PR with its own
+screenshots, following [Adding a new site](#adding-a-new-site). Progress is
+tracked in the [Editorial adoption](#editorial-adoption) table above.
 
 ---
 
@@ -201,7 +210,14 @@ https://raw.githubusercontent.com/EntEthAlliance/eea-design-system/<sha>/tokens.
 
 When a breaking token change is needed (name removal, value shift > 10%), a new major path will be added (`/v2/tokens.css`) and sites will be migrated explicitly via PR.
 
-**Current version:** `1.0.0` — initial rollout across 6 sites, 2026-07-22.
+**Current version:** `1.1.0` — editorial family added
+([#3](https://github.com/EntEthAlliance/eea-design-system/pull/3)), 2026-08-16.
+Additive only; no core token changed.
+
+| Version | Date | Change |
+|---|---|---|
+| `1.1.0` | 2026-08-16 | `editorial.css` added — editorial family tokens + `.eea-site-bar` / `.eea-colophon` |
+| `1.0.0` | 2026-07-22 | Initial rollout across 6 sites |
 
 ---
 
