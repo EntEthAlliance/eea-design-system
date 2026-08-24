@@ -1,5 +1,8 @@
 # EEA Design System
 
+> **Working Group modernization:** the operational playbook for bringing a WG's
+> web presence onto this design system is [WG_MODERNIZATION_PLAYBOOK.md](WG_MODERNIZATION_PLAYBOOK.md).
+
 Central design system for all Enterprise Ethereum Alliance web properties.
 
 **Live URL:** `https://entethalliance.github.io/eea-design-system/`
