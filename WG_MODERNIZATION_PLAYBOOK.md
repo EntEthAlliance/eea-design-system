@@ -1,14 +1,68 @@
 # EEA Working Group Modernization Playbook
 
-Operational playbook for bringing an EEA Working Group's web presence onto the
-EEA design system. Distilled from the **EthTrust Security Levels** modernization
-(2026-08-24, reference implementation:
+**Framework + operating logic** for bringing an EEA Working Group's web
+presence onto the EEA design system — and, when the WG is producing a new
+specification version, for running its public review cycle. Distilled from the
+**EthTrust Security Levels** modernization and v4 review launch (2026-08-24,
+reference implementation:
 [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site), live at
 <https://entethalliance.github.io/wg-ethtrust-site/>).
 
 Invocation contract: *"Modernize this Working Group: [URL / repo]. Follow the
 EEA Working Group Modernization Playbook."* An agent with the inputs in §1
 should be able to execute §3–§9 without further explanation.
+
+§0 is the framework: the principles every step derives from. When a situation
+isn't covered by a numbered step, decide from §0 — that is what it is for.
+
+## 0. The logic — ten principles the steps derive from
+
+1. **Git becomes the source of truth; URLs keep their meaning.** Every WG
+   surface ends up in a repo where change = PR, and every historical URL keeps
+   resolving — **redirect, never remove** (years of inbound links are an
+   asset). This is why go-live is redirect rules (§9), why the old files stay
+   untouched on the host, and why rollback is always trivial.
+2. **Content parity is sacred; design and content change separately.** A
+   restyle ships the same facts, links and contact paths — byte-identical
+   documents or verbatim transcription. Content changes (labels, rosters,
+   wording) are separate, human-approved diffs. Never bundle the two.
+3. **Standards documents keep their integrity.** A published spec is never
+   rebuilt — restyling is a CSS overlay on an identical copy (§6). A copy
+   defers canonically to the official URL until it *becomes* the official
+   serving location, then self-canonicalizes (§9.4). Nothing may drift.
+4. **Status must be legible on every surface.** Approved vs draft vs inactive
+   is stated where the reader is: banners on drafts ("AI-generated — not an
+   approved specification"), `noindex` on unapproved documents, pills and
+   labels on listings, the approved baseline always named next to any draft.
+   A draft that could be mistaken for a standard is a governance incident.
+5. **Credit is transcribed, never composed.** People/company credits come
+   verbatim from a published source (spec head matter, charter) and cite it.
+   Companies lead when the question the page answers is "who stands behind
+   this standard"; individuals are never invented from git handles.
+6. **Meet reviewers where they are.** Review artifacts are designed for the
+   intended audience, not for git-natives: rendered pages instead of PRs,
+   requirement-level diffs instead of changelogs (§12.2), structured forms
+   with dropdowns instead of blank issues (§12.3), one click from reading a
+   requirement to typed feedback. Short labels; explanations in helper text.
+7. **Every feedback channel is open, owned, and traced.** A promised comment
+   channel that is archived, unanswered, or untriaged is a broken promise —
+   audit it (§9b), reopen it, assign owners, and close stale items with a
+   resolution that maps asks to outcomes. Outreach gets a tracker: who was
+   asked, who answered, on which channel, and when to nudge (§12.4). Silence
+   is a bug, in both directions.
+8. **Humans decide meaning; agents execute mechanics.** The gate list (§2)
+   is this principle applied: design approval, anything on entethalliance.org,
+   status labels, rosters, repo administration, and every outbound email are
+   human decisions. Building, verifying, tracing and reporting are agent work.
+9. **Verify in the served artifact.** QA runs against live URLs and served
+   HTML, not local files or assumptions — the misses this caught on the
+   reference run (GA absent from later-built copies, Cloudflare-obfuscated
+   emails dead off-host, broken relative logos) all passed local review.
+   "Done" means checked where the user is.
+10. **Every run improves the framework.** Each WG run ends by folding its
+    corrections back into this document (the reference run corrected the
+    go-live model within hours). A per-WG tracking issue (§11) records the
+    run; this playbook stays generic and current.
 
 ---
 
@@ -325,7 +379,61 @@ playbook stays generic.
 - [ ] Canonicals flipped to self; "temporary routing" notes removed; issue closed
 ```
 
-## 12. EthTrust-specific things the next run should NOT copy blindly
+## 12. Running a public review cycle (optional stage — when the WG drafts a new spec version)
+
+Demonstrated end-to-end on EthTrust v4 (2026-08-24). Principles 4, 6 and 7
+drive everything here.
+
+### 12.1 The draft page
+A review draft is a **rendered page on the WG site** (`docs/spec/v<N>/`), not
+a PR people must decode. Non-negotiables (principle 4): persistent banner
+("DRAFT · AI-GENERATED · FOR VALIDATION & REVIEW ONLY — NOT AN APPROVED EEA
+SPECIFICATION OR CERTIFICATION BASELINE" — adapt provenance), `noindex`, the
+approved baseline named and linked in the head matter, provenance stated
+(what generated it, from which sources), and a closing note that the final
+version goes through the normal WG process. On the WG homepage the draft sits
+in a visually distinct card (red-accented) *below* the approved version.
+
+### 12.2 The requirement-level diff (the reviewer accelerator)
+Add a "v3 today → v4 proposed" section to the draft: side-by-side panels
+pairing the **exact current normative text** (extracted verbatim from the
+hosted approved copy, anchor-linked) with the exact proposed replacement, one
+panel per modified/replaced requirement, level changes flagged explicitly
+([GP]→[S] is a certification-impact change reviewers must see). New
+candidates get a no-counterpart table; nearest-context pairings are labelled
+as editorial judgment. Give every candidate box an anchor id so feedback can
+deep-link it. Reference implementation: v4 page §2.7.
+
+### 12.3 The intake machinery (in the public-comment repo)
+- A **structured issue form** (`.yml`, not `.md`) mirroring the draft's own
+  review questions as a dropdown — short labels (2–5 words, they must not
+  wrap on mobile), definitions in helper text; fields for requirement ID and
+  section; only the feedback box required; proposed normative text optional
+  and carrying the participation-agreement gate; name/affiliation for
+  acknowledgment. Own label (e.g. `v4-review`) for triage.
+- A **pinned umbrella issue**: what the draft is, what feedback is wanted,
+  how to respond, form linked. First thing the issues tab shows.
+- README callout + spec-table row for the draft, framed exactly like the page.
+- Route buttons publicward: the WG page and draft link the pinned issue/form,
+  not internal tracking issues.
+- Close stale pre-cycle issues with a **resolution comment mapping asks to
+  outcomes** (what was adopted, where; what wasn't; where to re-raise).
+
+### 12.4 Outreach tracing (the follow-up loop)
+When the requester emails reviewers, build the trace the same day:
+- Pull the actual sent message (recipients, subject, thread id) from the
+  mailbox — never work from a remembered list.
+- A tracker script keyed on that recipient list checks (a) thread replies +
+  inbound mail from recipients mentioning the spec, (b) new issues/comments
+  in the public-comment repo; keeps delta state; prints responded/outstanding
+  by org; suggests a nudge from ~day 5.
+- A weekday OpenClaw cron (main session) runs it: digest on new activity,
+  full status Mondays, silent otherwise. **The machinery never emails
+  anyone** — nudge drafts only on the requester's explicit ask (principle 8).
+  Reference: `clawd/scripts/ethtrust_v4_review_tracker.py` + cron
+  `ethtrust-v4-review-tracker`.
+
+## 13. EthTrust-specific things the next run should NOT copy blindly
 
 - The `[S]/[M]/[Q]` level plates and depth bars — EthTrust's core concept;
   find the equivalent load-bearing concept for the next WG (or omit).
