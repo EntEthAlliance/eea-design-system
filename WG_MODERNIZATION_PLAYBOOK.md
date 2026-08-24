@@ -19,6 +19,7 @@ should be able to execute §3–§9 without further explanation.
 | WG live URL and/or repo | From the requester |
 | GitHub org access (repo create, PR, Pages admin) | `gh auth status` — must be an EntEthAlliance member (Claudy: `claudyfaucant`) |
 | WordPress REST admin | `WP_URL`/`WP_USER`/`WP_APP_PASSWORD` in the ops host's `secrets/shared/crm.env` (user `arlo`, administrator). **Never commit these.** |
+| WP Engine portal (redirect rules, files) | **Redwan only** — the agent prepares rule tables (§9), Redwan applies them |
 | Design system | This repo's Pages URLs (see README Quick start); editorial family for WG pages |
 | Analytics tag | `GT-PL9524M` — the shared EEA Pages Google tag (GA4 property 355501273); snippet in §7, canonical copy in `pages-index/dist/index.html` |
 | WG facts | `ops-admin/active-groups.md` (leadership, Telegram links, repo pointers); the WG's charter/spec repos; the live page itself |
@@ -40,10 +41,11 @@ should be able to execute §3–§9 without further explanation.
    people/companies, transcribe **verbatim from a published source** (spec head
    matter, charter) and cite it — never compile a roster from git history or
    guesswork (GitHub handles ≠ publishable names).
-4. **Never delete or overwrite** the old static files on the WP host; the
-   go-live swap (§9) is done by whoever holds WP Engine SFTP (historically
-   chaals), with a backup taken first.
-5. Standard engineering rules apply: branch + PR for every change (the only
+4. **Never delete or overwrite** the old static files on the WP host; go-live
+   is via redirect rules that only Redwan can add (WP Engine portal — §9).
+5. **Repo administration changes** (un-archiving, adding/removing collaborators)
+   only on Redwan's explicit instruction, named per repo and per person.
+6. Standard engineering rules apply: branch + PR for every change (the only
    exception is the initial scaffold commit on a brand-new empty repo), PR
    contract sections, one PR = one concern.
 
@@ -154,10 +156,17 @@ must stay content-identical — this is the integrity story for a standards doc.
   keep per-level border distinctions, move the palette), W3C-blue `.simple`
   tables, orange `code`. Follow-up worth doing: promote this skin into the
   design system as a shared file instead of per-WG copies.
-- Serve at `docs/spec/<vN>/`; point the WG page's buttons at these copies
-  *for now* (flip back to canonical URLs after the §9 swap).
-- SEO: these copies `<link rel="canonical">` to the **official
-  entethalliance.org URL** — they must never compete with the canonical spec.
+- Serve at `docs/spec/<vN>/`; point the WG page's buttons at these copies.
+- **Restyle every published version** (v1…vN), not just the current one — §9's
+  redirects cover the whole `/specs/<spec>/` version tree, so every version
+  needs a landing copy. Older versions may lack artifacts the current one has
+  (EthTrust v1 has no checklist — curl-check before copying); older ReSpec
+  builds carry extra chrome classes (`respec-tests-details` etc.) that render
+  acceptably unthemed. Add each copy to the sitemap and the page's
+  previous-versions list.
+- SEO: until §9's redirects are live, these copies `<link rel="canonical">` to
+  the **official entethalliance.org URL** — they must never compete with the
+  canonical spec. After redirects, canonicals flip to self (§9.4).
 - QA: screenshot top matter, a requirements-heavy mid-section, and the
   checklist's interactive controls.
 
@@ -220,22 +229,64 @@ Conventions on page 70: group titles carry status prefixes — `"2026 - "`
 Set the new link's target to the Pages URL; after the §9 swap it should return
 to the entethalliance.org URL.
 
-## 9. Go-live on entethalliance.org (needs a human with WP Engine SFTP)
+## 9. Go-live on entethalliance.org (needs Redwan — WP Engine portal)
 
-The old `/groups/<Name>/` and `/specs/...` trees are server filesystem — the
-swap is manual, by whoever holds WP Engine access (historically **chaals**):
+The old `/groups/<Name>/` and `/specs/...` trees are server filesystem.
+**WP Engine access is held by Redwan** (not chaals — corrected 2026-08-24), and
+the preferred mechanism is **301 redirect rules, not a file swap** (Redwan's
+call on the EthTrust run: "I'd rather do a redirection"). Never recommend
+removal — years of inbound links would 404; redirects preserve them and pass
+SEO weight.
 
 1. Preview approved (§2) and WP listing link flipped (§8) — the new site is
-   already the only navigable path; the swap is then zero-deadline.
-2. Back up the current `/groups/<Name>/` directory (rollback = re-upload it).
-3. Upload the contents of `docs/` to `/groups/<Name>/` — keep `index.html` at
-   the same path; **leave the shared `/groups/css|js/` folders alone** (sibling
-   group pages still use them).
-4. Same for restyled spec copies over `/specs/<...>/` if approved (they are
-   content-identical, so this is a styling-only change at the canonical URL).
-5. Purge WP Engine + Cloudflare cache for the paths; smoke-check live vs
-   preview side by side.
-6. Repo follow-up PR: flip canonicals + spec buttons to the canonical URLs.
+   already the only navigable path; go-live is then zero-deadline.
+2. Agent prepares a **redirect rule table** for Redwan to paste in the
+   WP Engine User Portal → Redirect rules (they act before static-file
+   serving, so they work on these paths; Cloudflare Redirect Rules are an
+   equivalent alternative). Pattern from the EthTrust run — all 301:
+
+   | Source (regex) | Destination |
+   |---|---|
+   | `^/groups/<Name>/?.*` | Pages site root |
+   | `^/specs/<spec>/vN/checklist\.html` | `…/spec/vN/checklist.html` |
+   | `^/specs/<spec>/vN/?.*` | `…/spec/vN/` |
+   | `^/specs/<spec>/?$` (latest-release URL) | newest `…/spec/vN/` |
+
+   Rules for specific files (checklists) must sit **above** their broader
+   version rule. Scope sources tightly — never a bare `/specs/` catch-all;
+   other EEA specs live there. This implies **every published spec version
+   needs a restyled copy first** (§6) so nothing redirects to a 404.
+3. **Do not delete or overwrite** the old files; leave the shared
+   `/groups/css|js/` folders alone (sibling group pages still use them).
+   The redirect rules simply shadow the old tree — rollback = delete the rules.
+4. After Redwan confirms the redirects are live: follow-up PR flips the
+   canonical tags on all copies to **self** (they point at the
+   entethalliance.org URLs until then — correct before, a redirect loop
+   signal after) and removes "temporary routing" notes from READMEs/buttons.
+5. Smoke-check every old URL follows its redirect to the right page.
+
+(The old file-swap runbook — backup, upload `docs/`, purge caches — remains
+valid if a WG ever prefers same-URL serving, but redirects are the default.)
+
+## 9b. The WG's public-comment repo (check for one — EthTrust had one)
+
+Specs often direct public feedback to a dedicated repo (EthTrust: the v3
+spec's *Status* section says to raise issues in `EthTrust-public`). Audit it:
+
+- **Is it archived?** An archived comment repo means the spec promises a
+  channel the public cannot use — surface this immediately. Un-archiving is a
+  §2 admin action (Redwan's explicit call; on EthTrust it was an oversight,
+  not governance, and he ordered it reopened).
+- After un-archiving, refresh it: repo **description + homepage** (point at
+  the WG site), README rewrite (canonical spec links — old READMEs point at
+  retired GH Pages addresses — the WG site, and a clear editorial-vs-
+  substantive comment flow preserving the Non-Member Participation Agreement
+  process), **issue-template assignees** (auto-assignees may name people who
+  have left — align with current co-chairs), and any malformed links.
+- Cross-link it from the WG page's Contribute section ("anyone may raise an
+  issue — no membership required"); the old pages typically never surfaced it.
+- Stale open issues are **WG business** — flag them to the co-chairs on the
+  tracking issue; never answer spec questions yourself.
 
 ## 10. QA gate (run before reporting done)
 
@@ -268,9 +319,10 @@ playbook stays generic.
 - [ ] SEO + analytics (§7) verified in served HTML
 - [ ] **APPROVAL: design preview** (requester) — link to message
 - [ ] WP listing link flipped (§8) — backup file recorded
+- [ ] Public-comment repo audited/refreshed (§9b) — or N/A, stated why
 - [ ] QA gate (§10) passed
-- [ ] **HUMAN: WP Engine swap (§9)** — owner, date, rollback path
-- [ ] Canonicals/buttons flipped to canonical URLs; issue closed
+- [ ] **HUMAN: redirect rules live (§9)** — Redwan, WP Engine portal; rule table linked
+- [ ] Canonicals flipped to self; "temporary routing" notes removed; issue closed
 ```
 
 ## 12. EthTrust-specific things the next run should NOT copy blindly
@@ -281,6 +333,7 @@ playbook stays generic.
   credit source differs; some have none (then skip the section, don't invent).
 - The STIX-for-DeFi second strand — WG-specific.
 - `wg-eta-registry` being archived — check, don't assume, for the next repo.
-- Open items EthTrust still carries: WP Engine swap not done; "(inactive)"
-  label and Opal Graham co-chair status awaiting EEA staff; spec-skin CSS not
-  yet promoted into this repo.
+- Open items EthTrust still carries (see wg-ethtrust-site#4): §9 redirect
+  rules awaiting Redwan; canonical flip after that; "(inactive)" label and
+  Opal Graham co-chair status awaiting EEA staff; spec-skin CSS not yet
+  promoted into this repo.
