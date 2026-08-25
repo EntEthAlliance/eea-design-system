@@ -15,7 +15,7 @@ originate at **[intelligence.entethalliance.org](https://intelligence.entethalli
 which is the canonical reference this repo aligns with. No other design
 language is referenced by this repo.
 
-| | Editorial family |
+| Aspect | Editorial family |
 |---|---|
 | Ground | Light-only warm paper `#EDEAE3` |
 | Ink | `#16181A`, secondary `#5A645E` (5.11:1 on page) |

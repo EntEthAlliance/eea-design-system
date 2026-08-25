@@ -43,9 +43,14 @@ remains served for previously-adopted sites only — see
 <body class="eea-editorial">
 ```
 
-Do **not** load the legacy `tokens.css` alongside it — the two set different
-grounds and fonts. Linking `editorial.css` without the `.eea-editorial` class
-has no visual effect, so it is safe to add before you are ready to switch.
+New sites need nothing else from this repo — the legacy core-system files are
+deprecated (see [Legacy core system](#legacy-core-system-deprecated)). Linking
+`editorial.css` is always safe, including next to those files: it only declares
+`--eea-ed-*` tokens and has no visual effect until `.eea-editorial` is on
+`<body>`, so it can be added before you are ready to switch. What a page should
+not do is *apply* both families at once — `base.css` and `components.css` paint
+the legacy dark ground and would fight the editorial surface, so drop them in
+the same change that adds the `.eea-editorial` class.
 
 ---
 
@@ -53,7 +58,7 @@ has no visual effect, so it is safe to add before you are ready to switch.
 
 Design principles, per [intelligence.entethalliance.org](https://intelligence.entethalliance.org/):
 
-| | |
+| Aspect | Principle |
 |---|---|
 | Ground | Light-only warm paper `#EDEAE3` |
 | Ink | Near-black `#16181A` |
