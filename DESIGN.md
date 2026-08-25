@@ -23,8 +23,9 @@ Three tiers define how much of the design system each EEA web property adopts.
 | Repo | PR | Merged | What changed |
 |---|---|---|---|
 | [ops-finance](https://github.com/EntEthAlliance/ops-finance) | [#5](https://github.com/EntEthAlliance/ops-finance/pull/5) | 2026-07-22 | Full system import; ethereum-101 panel redesign (eliminated floating white container, all panels on `--eea-bg`) |
-| [EntEthAlliance.github.io](https://github.com/EntEthAlliance/EntEthAlliance.github.io) | [#16](https://github.com/EntEthAlliance/EntEthAlliance.github.io/pull/16) | 2026-07-22 | tokens.css + IBM Plex Sans; accent `#9ad1ff` → `#627eea`; card radius 18px → 12px |
 | [pages-index](https://github.com/EntEthAlliance/pages-index) | [#1](https://github.com/EntEthAlliance/pages-index/pull/1) | 2026-07-22 | tokens.css; `--bg` `#0b1220` → `#0a0a0f`; accent + badge + font aligned |
+
+`EntEthAlliance.github.io` adopted Tier A on 2026-07-22 (PR #16) and has since moved to the editorial family — see [Editorial adoption](#editorial-adoption) below.
 
 ### Tier B — Product
 
@@ -105,8 +106,13 @@ duplication `editorial.css` is meant to end.
 | Repo | PR | Status | What changed |
 |---|---|---|---|
 | [ops-business-scanner](https://github.com/EntEthAlliance/ops-business-scanner) | [#22](https://github.com/EntEthAlliance/ops-business-scanner/pull/22) | open | Links `editorial.css` from Pages; bridge block onto `--eea-ed-*`; canonical `.eea-site-bar` / `.eea-colophon` markup; ~160 lines of duplicated rules deleted |
+| [EntEthAlliance.github.io](https://github.com/EntEthAlliance/EntEthAlliance.github.io) (hub) | [#26](https://github.com/EntEthAlliance/EntEthAlliance.github.io/pull/26) | open | Moved from Tier A core (PR #16, 2026-07-22) to editorial; `.eea-site-bar`/`.eea-colophon` markup; all 12 outbound links unchanged |
+| [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) | — | built | Reference playbook run; design approved, pending WP Engine redirect — [wg-ethtrust-site#4](https://github.com/EntEthAlliance/wg-ethtrust-site/issues/4) |
+| [crosschain-interoperability](https://github.com/EntEthAlliance/crosschain-interoperability) | — | built | Second playbook run; QA passed, pending WP Engine redirect — [crosschain-interoperability#1](https://github.com/EntEthAlliance/crosschain-interoperability/issues/1) |
 | [ops-policy-friday](https://github.com/EntEthAlliance/ops-policy-friday) | — | not started | Still carries its hand copy |
 | [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | — | not started | Origin site; still inline `<style>` |
+
+Full roadmap for remaining sites: [eea-design-system#8](https://github.com/EntEthAlliance/eea-design-system/issues/8).
 
 Drift is already measurable. The mono label role (uppercase Kode Mono, used for
 every tag, badge, kicker and table head) had spread across **nine font sizes
@@ -135,6 +141,10 @@ Two ways forward, for maintainer decision:
 Option 1 is the clearer read — the distinction is which *family* a site
 belongs to, which is a different axis from how *much* of a family it adopts.
 But this is a governance call, not a technical one, so nothing here assumes it.
+
+The hub's move (`EntEthAlliance.github.io`, PR #26) is the first case of a
+site leaving Tier A *for* editorial rather than adopting editorial fresh —
+evidence for whoever settles this, not a decision on it.
 
 ### Remaining migrations
 
