@@ -1,28 +1,29 @@
 /*
- * EEA Design System — Editorial Family
- * Version: 1.1.0  (added to the system 2026-08-16, PR #3)
+ * EEA Design System — Editorial Family (the EEA design language)
+ * Version: 1.2.0  (added 2026-08-16, PR #3; declared the sole design
+ *                  language 2026-08-25; :focus-visible states 2026-08-25)
  *
  * Depends on: nothing. This file is standalone and does NOT require tokens.css.
  *
  * WHAT THIS IS
  * ------------
- * A second, parallel design family used by EEA's published-editorial
- * properties. It is NOT a theme of the core system and does not override it:
+ * THE design language of the EEA design system: light-only warm paper,
+ * Inter / Kode Mono, program-green accent #1F5C4A, hard edges, no shadows.
+ * Its design principles originate at, and stay aligned with,
+ * https://intelligence.entethalliance.org/ — the canonical reference for
+ * every value in this file. All new EEA web properties adopt this family.
  *
- *   core system   dark-first, IBM Plex Sans/Mono, accent #627eea,
- *                 12px radii, shadows, app/product surfaces
- *   editorial     light-only warm paper, Inter/Kode Mono, accent #1F5C4A,
- *                 hard edges, no shadows, print-broadsheet surfaces
- *
- * The two are deliberately different languages for different jobs. Merging
- * them would flatten both. See DESIGN.md § Editorial family.
+ * The former dark "core system" (tokens.css / base.css / nav.css /
+ * components.css) is DEPRECATED — served only for the sites that already
+ * link it, frozen otherwise. See DESIGN.md.
  *
  * SAFE TO LINK
  * ------------
  * Linking this file has NO visual effect on its own — it only declares
  * --eea-ed-* custom properties. A page opts in by putting .eea-editorial on
- * <body>. That keeps the core contract's "dark is default" rule intact: this
- * file never touches :root's theme tokens and never sets color-scheme on :root.
+ * <body>. This file never touches :root's theme tokens and never sets
+ * color-scheme on :root, so it can be linked next to legacy stylesheets
+ * (including the deprecated tokens.css) without side effects.
  *
  * Usage:
  *   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +44,10 @@
  *   5. .eea-editorial — opt-in page surface
  *   6. .eea-site-bar — shared program header
  *   7. .eea-colophon — shared deep-green footer
+ *
+ * Every interactive element the file styles carries a :focus-visible
+ * state alongside its :hover state — keyboard parity is part of the
+ * component contract, not a per-site concern.
  */
 
 /* ═══════════════════════════════════════════════════════════
@@ -204,7 +209,8 @@
   text-decoration: none;
   border-bottom: 0;
 }
-.eea-site-id:hover { opacity: 0.85; }
+.eea-site-id:hover,
+.eea-site-id:focus-visible { opacity: 0.85; }
 .eea-site-id-logo { display: block; width: 36px; height: 36px; object-fit: contain; }
 .eea-site-id-rule { width: 1px; height: 24px; background: rgba(22, 24, 26, 0.2); }
 .eea-site-id-stack { display: inline-flex; flex-direction: column; gap: 5px; }
@@ -243,9 +249,18 @@
   border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
-.eea-site-links a:hover {
+.eea-site-links a:hover,
+.eea-site-links a:focus-visible {
   color: var(--eea-ed-ink);
   border-bottom-color: var(--eea-ed-line);
+}
+
+/* Focus ring — the accent green reads on the paper ground of the bar.
+   Keyboard users get the same affordance the pointer gets, plus a ring
+   the hover state alone cannot provide. */
+.eea-site-bar a:focus-visible {
+  outline: 2px solid var(--eea-ed-accent);
+  outline-offset: 2px;
 }
 .eea-site-links a[aria-current="page"],
 .eea-site-links span[aria-current="page"] {
@@ -290,9 +305,17 @@
   text-decoration: none;
   border-bottom: 1px solid var(--eea-ed-deep-mute);
 }
-.eea-colophon a:hover {
+.eea-colophon a:hover,
+.eea-colophon a:focus-visible {
   color: var(--eea-ed-deep-hover);
   border-color: var(--eea-ed-deep-hover);
+}
+
+/* On the deep-green ground the accent is too dark to read as a ring —
+   the light deep-hover mint is the legible partner here. */
+.eea-colophon a:focus-visible {
+  outline: 2px solid var(--eea-ed-deep-hover);
+  outline-offset: 2px;
 }
 .eea-colophon-meta {
   margin-top: 1rem;

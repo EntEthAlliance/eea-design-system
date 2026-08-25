@@ -5,57 +5,32 @@
 
 Central design system for all Enterprise Ethereum Alliance web properties.
 
+The system has **one design language**: the **editorial family**, whose design
+principles originate at — and stay aligned with —
+[intelligence.entethalliance.org](https://intelligence.entethalliance.org/).
+That site is the canonical reference for every token in `editorial.css`; no
+other design language is referenced by this repo. (A legacy dark "core system"
+remains served for previously-adopted sites only — see
+[Legacy core system](#legacy-core-system-deprecated).)
+
 **Live URL:** `https://entethalliance.github.io/eea-design-system/`
 
 ---
 
 ## Files
 
-| File | Purpose | Load order |
+| File | Purpose | Status |
 |---|---|---|
-| `tokens.css` | All CSS custom properties (colors, typography, spacing, radius, shadows) | 1st — required by everything |
-| `base.css` | Box-model reset, body defaults, scrollbar, focus, print | 2nd — optional but recommended |
-| `nav.css` | Unified fixed navigation component | 3rd — only on pages with the nav |
-| `nav.js` | Theme toggle + active link highlighting | After `nav.css` |
-| `components.css` | Cards, icon chips, tags, badges, buttons, hero, footer, grids | As needed |
-| `editorial.css` | **Separate family** — editorial/publication surfaces. Standalone; does not need `tokens.css` | On its own |
-
-> `editorial.css` is not a theme of the core system — it is a second design
-> language for EEA's published-editorial properties. See
-> [Editorial family](#editorial-family) below and DESIGN.md.
+| `editorial.css` | **The design language** — tokens (`--eea-ed-*`), page surface, site bar, colophon. Standalone; no other file needed | Current |
+| `tokens.css` | Legacy core-system custom properties | **Deprecated — frozen** |
+| `base.css` | Legacy core-system reset / body defaults | **Deprecated — frozen** |
+| `nav.css` | Legacy core-system fixed navigation | **Deprecated — frozen** |
+| `nav.js` | Legacy theme toggle + active-link script | **Deprecated — frozen** |
+| `components.css` | Legacy core-system components | **Deprecated — frozen** |
 
 ---
 
 ## Quick start
-
-### Tier A sites (full system)
-
-```html
-<head>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
-
-  <!-- EEA Design System -->
-  <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/tokens.css">
-  <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/base.css">
-  <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/nav.css">
-  <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/components.css">
-
-  <!-- Theme script — must run before first paint -->
-  <script src="https://entethalliance.github.io/eea-design-system/nav.js"></script>
-</head>
-```
-
-### Tier B sites (tokens only)
-
-```html
-<link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/tokens.css">
-<!-- Then reference --eea-* variables in your local CSS -->
-```
-
-### Editorial sites
 
 ```html
 <head>
@@ -68,24 +43,30 @@ Central design system for all Enterprise Ethereum Alliance web properties.
 <body class="eea-editorial">
 ```
 
-Do **not** load `tokens.css` alongside it — the two families set different
-grounds and fonts. Linking `editorial.css` without the `.eea-editorial` class
-has no visual effect, so it is safe to add before you are ready to switch.
+New sites need nothing else from this repo — the legacy core-system files are
+deprecated (see [Legacy core system](#legacy-core-system-deprecated)). Linking
+`editorial.css` is always safe, including next to those files: it only declares
+`--eea-ed-*` tokens and has no visual effect until `.eea-editorial` is on
+`<body>`, so it can be added before you are ready to switch. What a page should
+not do is *apply* both families at once — `base.css` and `components.css` paint
+the legacy dark ground and would fight the editorial surface, so drop them in
+the same change that adds the `.eea-editorial` class.
 
 ---
 
-## Editorial family
+## The design language
 
-A second, parallel design language for EEA's published-editorial properties.
-It is not a theme of the core system and does not override it.
+Design principles, per [intelligence.entethalliance.org](https://intelligence.entethalliance.org/):
 
-| | Core system | Editorial |
-|---|---|---|
-| Ground | Dark-first `#0a0a0f` | Light-only warm paper `#EDEAE3` |
-| Type | IBM Plex Sans / Mono | Inter / Kode Mono |
-| Accent | `#627eea` Ethereum blue | `#1F5C4A` program green |
-| Edges | 12px radii, shadows | Hard rules, no shadows |
-| For | App and product surfaces | Broadsheet / publication surfaces |
+| Aspect | Principle |
+|---|---|
+| Ground | Light-only warm paper `#EDEAE3` |
+| Ink | Near-black `#16181A` |
+| Type | Inter for prose, Kode Mono for labels and data |
+| Accent | `#1F5C4A` program green |
+| Edges | Hard rules, no shadows, no radii |
+| Pillars | Three program pillars — Anticipate / Work / Connect — each owning one colour, used as marks, never as text |
+| Theming | None — light only, print-broadsheet surfaces |
 
 ### Components
 
@@ -95,13 +76,12 @@ It is not a theme of the core system and does not override it.
 | `.eea-site-bar` | Shared program header: EEA mark, wordmark, pillar bars, mono links |
 | `.eea-colophon` | Deep-green closing panel with pillar bars |
 
-The site bar has no JavaScript. Unlike `.eea-unified-nav` there is no theme
-toggle and no runtime active-link detection — mark the current page with
-`aria-current="page"` in the HTML.
+The site bar has no JavaScript — no theme toggle, no runtime active-link
+detection. Mark the current page with `aria-current="page"` in the HTML.
 
-### Editorial token reference
+### Token reference
 
-All editorial tokens are prefixed `--eea-ed-`.
+All tokens are prefixed `--eea-ed-`.
 
 | Token | Value | Use |
 |---|---|---|
@@ -139,92 +119,45 @@ When a pillar has to be named in text, use its `-ink` partner.
 
 ---
 
-## Nav HTML structure
+## Adoption
 
-```html
-<nav class="eea-unified-nav">
-  <a class="eea-unified-nav-brand" href="/">
-    <span>EEA</span>
-    <span>Enterprise <em>Ethereum</em> Alliance</span>
-  </a>
-  <div class="eea-unified-nav-links">
-    <a href="/" class="active">Hub</a>
-    <a href="/finance.html">Finance</a>
-    <a href="/ethereum-101.html">Learn</a>
-    <a href="/institutional-crypto-market.html">Institutional</a>
-    <a href="/agents.html">Agents</a>
-  </div>
-  <button class="eea-unified-nav-toggle" aria-label="Toggle theme">🌙</button>
-</nav>
-```
+New EEA web properties adopt `editorial.css` — see the Quick start above and
+the [WG modernization playbook](WG_MODERNIZATION_PLAYBOOK.md) §5 for the
+canonical page pattern. Governance, the token contract, and the per-site
+adoption record live in [DESIGN.md](DESIGN.md).
 
-nav.js handles `class="active"` automatically based on the current URL.
+Properties already carrying the language — note that "carrying" and
+"adopting `editorial.css`" are not the same thing:
+
+| Property | How it carries the language |
+|---|---|
+| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | Origin and canonical reference — its own inline CSS, not this file |
+| [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) | Links `editorial.css` |
+| ops-business-scanner | Migrating onto `editorial.css` |
+| ops-policy-friday | Hand copy under local names; not yet migrated |
+
+DESIGN.md's adoption record is the authoritative per-site status.
 
 ---
 
-## Token reference
+## Legacy core system (deprecated)
 
-### Colors
+The repo previously maintained a second, dark-first design language
+("core system": `tokens.css`, `base.css`, `nav.css`, `nav.js`,
+`components.css` — IBM Plex, accent `#627eea`). It is **deprecated as of
+2026-08-25**: the editorial family is the only design language this repo
+references going forward.
 
-| Token | Dark value | Light value | Use |
-|---|---|---|---|
-| `--eea-bg` | `#0a0a0f` | `#f8f9fc` | Page background |
-| `--eea-bg-raised` | `#12121a` | `#f0f1f5` | Elevated surface |
-| `--eea-bg-card` | `#1a1a24` | `#ffffff` | Card background |
-| `--eea-bg-hover` | `#22222e` | `#eceef4` | Hover surface |
-| `--eea-text` | `#ffffff` | `#0f0f14` | Primary text |
-| `--eea-text-2` | `#a0a0b0` | `#4a4a5a` | Secondary text |
-| `--eea-text-3` | `#6a6a7a` | `#8a8a9a` | Muted text |
-| `--eea-accent` | `#627eea` | `#627eea` | Primary accent |
-| `--eea-accent-hover` | `#8fa8ff` | `#4a66d8` | Accent on hover |
-| `--eea-accent-bg` | `rgba(98,126,234,0.12)` | `rgba(98,126,234,0.08)` | Tinted chip |
-| `--eea-border` | `rgba(255,255,255,0.08)` | `rgba(0,0,0,0.08)` | Translucent border |
-| `--eea-border-solid` | `#2a2a3a` | `#d8dae8` | Solid border |
-| `--eea-success` | `#00d4aa` | — | Success state |
-| `--eea-warning` | `#fbbf24` | — | Warning state |
-| `--eea-danger` | `#ff6b6b` | — | Error / danger |
+The legacy files remain served from `main` unchanged, because previously
+adopted sites hot-link them — removing them would break live properties. The
+rules are:
 
-### Typography
-
-| Token | Value | Use |
-|---|---|---|
-| `--eea-font` | `'IBM Plex Sans', system-ui, sans-serif` | Body / UI |
-| `--eea-font-mono` | `'IBM Plex Mono', ui-monospace, monospace` | Code / labels |
-| `--eea-text-xs` | `0.75rem` | Labels, captions |
-| `--eea-text-sm` | `0.875rem` | Secondary copy |
-| `--eea-text-base` | `1rem` | Body |
-| `--eea-text-lg` | `1.125rem` | Card titles |
-| `--eea-text-xl` | `1.5rem` | Section headings |
-| `--eea-text-2xl` | `2rem` | Page subheadings |
-| `--eea-text-3xl` | `2.5rem` | Page H1 |
-
-### Layout
-
-| Token | Value | Use |
-|---|---|---|
-| `--eea-container` | `1200px` | Standard max-width |
-| `--eea-container-wide` | `1400px` | Data-heavy pages |
-| `--eea-radius-sm` | `6px` | Buttons, tags |
-| `--eea-radius-md` | `12px` | Cards (canonical) |
-| `--eea-radius-lg` | `18px` | Large surface cards |
-| `--eea-gap-md` | `1.5rem` | Standard grid gap |
-| `--eea-shadow-md` | `0 4px 12px rgba(0,0,0,0.25)` | Card rest shadow |
-| `--eea-shadow-lg` | `0 12px 32px rgba(0,0,0,0.35)` | Card hover shadow |
-
----
-
-## Tier governance
-
-| Tier | Sites | What they adopt |
-|---|---|---|
-| **A — Brand** | ops-finance, EntEthAlliance.github.io, pages-index | Full system |
-| **B — Product** | Shibui, ops-solution-catalog, wg-ethereum-institute | tokens.css + selective layers |
-| **C — App / WG** | eea-board-portal, wg-privacy | Isolated — do not import this system |
-
-Editorial properties (intelligence.entethalliance.org, ops-policy-friday,
-ops-business-scanner) sit outside this table — they run the editorial family,
-not the core system. Their tier assignment is an open governance question; see
-DESIGN.md § Editorial family.
+- **Frozen.** No new tokens, no value changes, except fixes needed to keep
+  already-adopted sites rendering.
+- **No new adoptions.** Do not link any legacy file from a new site.
+- **Migrate on touch.** When a legacy-adopted site gets substantive design
+  work, move it to `editorial.css` rather than extending its core-system
+  usage. The migration record is in DESIGN.md.
 
 ---
 
@@ -233,16 +166,16 @@ DESIGN.md § Editorial family.
 Files are served directly from `main`. No versioned CDN paths yet.
 To pin a version, link to a commit SHA:
 ```
-https://raw.githubusercontent.com/EntEthAlliance/eea-design-system/<sha>/tokens.css
+https://raw.githubusercontent.com/EntEthAlliance/eea-design-system/<sha>/editorial.css
 ```
-
-When a breaking change is needed, a new major directory will be added (`/v2/tokens.css`).
 
 ---
 
 ## Contributing
 
-All token changes require a PR with:
+`editorial.css` changes must stay aligned with the design principles of
+[intelligence.entethalliance.org](https://intelligence.entethalliance.org/) —
+it is the canonical reference. All token changes require a PR with:
 1. Description of what changed and why
 2. Which sites are affected
 3. Visual diff screenshots if any rendered output changes

@@ -1,6 +1,10 @@
 /*
- * EEA Design System — Components
- * Version: 1.0.0
+ * EEA Design System — Components  [DEPRECATED — legacy core system]
+ * Version: 1.0.0  (deprecated 2026-08-25)
+ *
+ * DEPRECATED: the sole EEA design language is now editorial.css, aligned
+ * with https://intelligence.entethalliance.org/. This file is frozen and
+ * served only for already-adopted sites. See DESIGN.md.
  *
  * Depends on: tokens.css (must be loaded first)
  *

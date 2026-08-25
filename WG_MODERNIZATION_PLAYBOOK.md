@@ -156,8 +156,10 @@ Decode it — don't guess the contact address.
 
 ## 5. Build the WG page (the design pattern)
 
-Use the **editorial family** (this repo's `editorial.css`) — not the core dark
-system. One self-contained `index.html`; only assets are `eea-logo.webp` and the
+Use the **editorial family** (this repo's `editorial.css`) — the design
+system's sole design language, aligned with intelligence.entethalliance.org
+(the legacy dark core system is deprecated and closed to new adoptions). One
+self-contained `index.html`; only assets are `eea-logo.webp` and the
 generated `og-card.png`.
 
 Head loads (exact order): Google Fonts preconnects + Inter/Kode Mono,
