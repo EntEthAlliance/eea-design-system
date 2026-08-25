@@ -64,6 +64,7 @@ The following guarantees apply to all `--eea-ed-*` tokens on `main`.
 | **Prefix is `--eea-ed-`** | No new tokens without the prefix. Avoids collision with any site's local vars. |
 | **No visual effect until opt-in** | `editorial.css` never writes `:root`'s theme tokens and never sets `color-scheme` on `:root`. Linking the file changes nothing — a page opts in with `<body class="eea-editorial">`. This is what lets it be linked next to legacy stylesheets safely. Any change to `editorial.css` must preserve it. |
 | **Load-order safe** | No `@import`, no external network calls, no JS. |
+| **Components are keyboard-reachable** | Every `:hover` state on a component this file styles has a matching `:focus-visible` state and a legible focus ring. A new component ships both or neither. |
 | **Pillar colours are semantic** | Never decorative, never text — none clears 4.5:1 on the page ground. Text uses the `-ink` partners. |
 
 ### What is NOT guaranteed
@@ -164,10 +165,11 @@ When a breaking token change is needed (name removal, value shift > 10%), a
 new major path will be added (`/v2/editorial.css`) and sites will be migrated
 explicitly via PR.
 
-**Current version:** `1.1.0`.
+**Current version:** `1.2.0`.
 
 | Version / date | Change |
 |---|---|
+| `1.2.0` — 2026-08-25 | `:focus-visible` states added to the `.eea-site-bar` and `.eea-colophon` links, matching each existing `:hover` state, plus a focus ring (accent on the bar's paper ground, `--eea-ed-deep-hover` mint on the colophon's deep green — the accent is not legible there). Additive: no token changed, and pages that do not use these components are unaffected. |
 | 2026-08-25 | **Governance:** editorial family declared the sole design language, aligned with intelligence.entethalliance.org; core system deprecated and frozen. No served value changed. |
 | `1.1.0` — 2026-08-16 | `editorial.css` added — editorial family tokens + `.eea-site-bar` / `.eea-colophon` ([#3](https://github.com/EntEthAlliance/eea-design-system/pull/3)) |
 | `1.0.0` — 2026-07-22 | Initial core-system rollout across 6 sites (now the legacy layer) |

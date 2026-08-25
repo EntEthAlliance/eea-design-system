@@ -1,7 +1,7 @@
 /*
  * EEA Design System — Editorial Family (the EEA design language)
- * Version: 1.1.0  (added 2026-08-16, PR #3; declared the sole design
- *                  language 2026-08-25)
+ * Version: 1.2.0  (added 2026-08-16, PR #3; declared the sole design
+ *                  language 2026-08-25; :focus-visible states 2026-08-25)
  *
  * Depends on: nothing. This file is standalone and does NOT require tokens.css.
  *
@@ -44,6 +44,10 @@
  *   5. .eea-editorial — opt-in page surface
  *   6. .eea-site-bar — shared program header
  *   7. .eea-colophon — shared deep-green footer
+ *
+ * Every interactive element the file styles carries a :focus-visible
+ * state alongside its :hover state — keyboard parity is part of the
+ * component contract, not a per-site concern.
  */
 
 /* ═══════════════════════════════════════════════════════════
@@ -205,7 +209,8 @@
   text-decoration: none;
   border-bottom: 0;
 }
-.eea-site-id:hover { opacity: 0.85; }
+.eea-site-id:hover,
+.eea-site-id:focus-visible { opacity: 0.85; }
 .eea-site-id-logo { display: block; width: 36px; height: 36px; object-fit: contain; }
 .eea-site-id-rule { width: 1px; height: 24px; background: rgba(22, 24, 26, 0.2); }
 .eea-site-id-stack { display: inline-flex; flex-direction: column; gap: 5px; }
@@ -244,9 +249,18 @@
   border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
-.eea-site-links a:hover {
+.eea-site-links a:hover,
+.eea-site-links a:focus-visible {
   color: var(--eea-ed-ink);
   border-bottom-color: var(--eea-ed-line);
+}
+
+/* Focus ring — the accent green reads on the paper ground of the bar.
+   Keyboard users get the same affordance the pointer gets, plus a ring
+   the hover state alone cannot provide. */
+.eea-site-bar a:focus-visible {
+  outline: 2px solid var(--eea-ed-accent);
+  outline-offset: 2px;
 }
 .eea-site-links a[aria-current="page"],
 .eea-site-links span[aria-current="page"] {
@@ -291,9 +305,17 @@
   text-decoration: none;
   border-bottom: 1px solid var(--eea-ed-deep-mute);
 }
-.eea-colophon a:hover {
+.eea-colophon a:hover,
+.eea-colophon a:focus-visible {
   color: var(--eea-ed-deep-hover);
   border-color: var(--eea-ed-deep-hover);
+}
+
+/* On the deep-green ground the accent is too dark to read as a ring —
+   the light deep-hover mint is the legible partner here. */
+.eea-colophon a:focus-visible {
+  outline: 2px solid var(--eea-ed-deep-hover);
+  outline-offset: 2px;
 }
 .eea-colophon-meta {
   margin-top: 1rem;
