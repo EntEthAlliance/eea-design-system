@@ -1,8 +1,14 @@
 /*
- * EEA Design System — Tokens
- * Version: 1.0.0  (initial rollout 2026-07-22)
+ * EEA Design System — Tokens  [DEPRECATED — legacy core system]
+ * Version: 1.0.0  (initial rollout 2026-07-22; deprecated 2026-08-25)
  * Source: https://github.com/EntEthAlliance/eea-design-system
  * Governance: see DESIGN.md
+ *
+ * DEPRECATED: the EEA design system now has a single design language — the
+ * editorial family (editorial.css), whose design principles originate at
+ * https://intelligence.entethalliance.org/. This file is FROZEN and served
+ * only so already-adopted sites keep rendering. Do not adopt it on new
+ * sites; migrate existing sites to editorial.css.
  *
  * Usage:
  *   <link rel="stylesheet" href="https://entethalliance.github.io/eea-design-system/tokens.css">

@@ -1,28 +1,29 @@
 /*
- * EEA Design System — Editorial Family
- * Version: 1.1.0  (added to the system 2026-08-16, PR #3)
+ * EEA Design System — Editorial Family (the EEA design language)
+ * Version: 1.1.0  (added 2026-08-16, PR #3; declared the sole design
+ *                  language 2026-08-25)
  *
  * Depends on: nothing. This file is standalone and does NOT require tokens.css.
  *
  * WHAT THIS IS
  * ------------
- * A second, parallel design family used by EEA's published-editorial
- * properties. It is NOT a theme of the core system and does not override it:
+ * THE design language of the EEA design system: light-only warm paper,
+ * Inter / Kode Mono, program-green accent #1F5C4A, hard edges, no shadows.
+ * Its design principles originate at, and stay aligned with,
+ * https://intelligence.entethalliance.org/ — the canonical reference for
+ * every value in this file. All new EEA web properties adopt this family.
  *
- *   core system   dark-first, IBM Plex Sans/Mono, accent #627eea,
- *                 12px radii, shadows, app/product surfaces
- *   editorial     light-only warm paper, Inter/Kode Mono, accent #1F5C4A,
- *                 hard edges, no shadows, print-broadsheet surfaces
- *
- * The two are deliberately different languages for different jobs. Merging
- * them would flatten both. See DESIGN.md § Editorial family.
+ * The former dark "core system" (tokens.css / base.css / nav.css /
+ * components.css) is DEPRECATED — served only for the sites that already
+ * link it, frozen otherwise. See DESIGN.md.
  *
  * SAFE TO LINK
  * ------------
  * Linking this file has NO visual effect on its own — it only declares
  * --eea-ed-* custom properties. A page opts in by putting .eea-editorial on
- * <body>. That keeps the core contract's "dark is default" rule intact: this
- * file never touches :root's theme tokens and never sets color-scheme on :root.
+ * <body>. This file never touches :root's theme tokens and never sets
+ * color-scheme on :root, so it can be linked next to legacy stylesheets
+ * (including the deprecated tokens.css) without side effects.
  *
  * Usage:
  *   <link rel="preconnect" href="https://fonts.googleapis.com">
