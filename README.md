@@ -126,10 +126,17 @@ the [WG modernization playbook](WG_MODERNIZATION_PLAYBOOK.md) §5 for the
 canonical page pattern. Governance, the token contract, and the per-site
 adoption record live in [DESIGN.md](DESIGN.md).
 
-Properties already carrying the language:
-[intelligence.entethalliance.org](https://intelligence.entethalliance.org/)
-(origin), ops-policy-friday, ops-business-scanner,
-[wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site).
+Properties already carrying the language — note that "carrying" and
+"adopting `editorial.css`" are not the same thing:
+
+| Property | How it carries the language |
+|---|---|
+| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | Origin and canonical reference — its own inline CSS, not this file |
+| [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) | Links `editorial.css` |
+| ops-business-scanner | Migrating onto `editorial.css` |
+| ops-policy-friday | Hand copy under local names; not yet migrated |
+
+DESIGN.md's adoption record is the authoritative per-site status.
 
 ---
 
