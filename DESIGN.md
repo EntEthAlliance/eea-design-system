@@ -1,4 +1,4 @@
-# EEA Design System — Governance
+# EEA Design System: Governance
 
 > This document is the authoritative record of design system decisions, tier
 > assignments, and the token contract. The [README](README.md) covers
@@ -10,8 +10,7 @@
 
 **As of 2026-08-25 the EEA design system has one design language: the
 editorial family** (`editorial.css`, tokens prefixed `--eea-ed-*`). Its design
-principles — palette, type pairing, pillar system, and contrast reasoning —
-originate at **[intelligence.entethalliance.org](https://intelligence.entethalliance.org/)**,
+principles: palette, type pairing, pillar system, and contrast reasoning: originate at **[intelligence.entethalliance.org](https://intelligence.entethalliance.org/)**,
 which is the canonical reference this repo aligns with. No other design
 language is referenced by this repo.
 
@@ -22,11 +21,11 @@ language is referenced by this repo.
 | Type | Inter / Kode Mono |
 | Accent | `#1F5C4A` program green |
 | Edges | Hard rules, no shadows |
-| Pillars | Anticipate `#EE9BFC` · Work `#F3CF2B` · Connect `#FEABA0` — marks, never text |
-| Theming | None — light only |
+| Pillars | Anticipate `#EE9BFC` · Work `#F3CF2B` · Connect `#FEABA0`: marks, never text |
+| Theming | None: light only |
 
 The former dark-first "core system" (`tokens.css` + `base.css` + `nav.css` +
-`nav.js` + `components.css`) is **deprecated** — see
+`nav.js` + `components.css`) is **deprecated**: see
 [Legacy core system](#legacy-core-system-deprecated--frozen). The 2026-08-16
 position that the two were "siblings, not reconcilable" is superseded: the
 editorial family is now the system; the core files are a frozen
@@ -42,14 +41,14 @@ compatibility layer, not a parallel language.
 | [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) | Built directly on `editorial.css` (WG playbook reference implementation) |
 
 `editorial.css` exists to end the hand-copy duplication: all three original
-properties ship the same site bar — same markup, same 36px mark, same three
-pillar bars, same mono links — as independent copies. Drift is already
+properties ship the same site bar: same markup, same 36px mark, same three
+pillar bars, same mono links: as independent copies. Drift is already
 measurable: the mono label role had spread across **nine font sizes and nine
 tracking values** between the copies before being collapsed onto the
 three-step scale in `--eea-ed-label-*` / `--eea-ed-track-*`.
 
 If intelligence.entethalliance.org's design evolves, `editorial.css` follows
-it — alignment PRs cite the site as the source of the change.
+it: alignment PRs cite the site as the source of the change.
 
 ---
 
@@ -62,10 +61,10 @@ The following guarantees apply to all `--eea-ed-*` tokens on `main`.
 | **Names are stable** | No token will be renamed without a deprecation period. Old name kept as alias for one release cycle. |
 | **Accent is `#1F5C4A`** | `--eea-ed-accent` will not change hue unless intelligence.entethalliance.org itself changes; the site is the source of truth. |
 | **Prefix is `--eea-ed-`** | No new tokens without the prefix. Avoids collision with any site's local vars. |
-| **No visual effect until opt-in** | `editorial.css` never writes `:root`'s theme tokens and never sets `color-scheme` on `:root`. Linking the file changes nothing — a page opts in with `<body class="eea-editorial">`. This is what lets it be linked next to legacy stylesheets safely. Any change to `editorial.css` must preserve it. |
+| **No visual effect until opt-in** | `editorial.css` never writes `:root`'s theme tokens and never sets `color-scheme` on `:root`. Linking the file changes nothing: a page opts in with `<body class="eea-editorial">`. This is what lets it be linked next to legacy stylesheets safely. Any change to `editorial.css` must preserve it. |
 | **Load-order safe** | No `@import`, no external network calls, no JS. |
 | **Components are keyboard-reachable** | Every `:hover` state on a component this file styles has a matching `:focus-visible` state and a legible focus ring. A new component ships both or neither. |
-| **Pillar colours are semantic** | Never decorative, never text — none clears 4.5:1 on the page ground. Text uses the `-ink` partners. |
+| **Pillar colours are semantic** | Never decorative, never text: none clears 4.5:1 on the page ground. Text uses the `-ink` partners. |
 
 ### What is NOT guaranteed
 
@@ -80,10 +79,10 @@ The following guarantees apply to all `--eea-ed-*` tokens on `main`.
 
 | Repo | PR | Status | What changed |
 |---|---|---|---|
-| [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) | — | live | Built on `editorial.css` from the start (playbook reference implementation, 2026-08-24) |
+| [wg-ethtrust-site](https://github.com/EntEthAlliance/wg-ethtrust-site) |: | live | Built on `editorial.css` from the start (playbook reference implementation, 2026-08-24) |
 | [ops-business-scanner](https://github.com/EntEthAlliance/ops-business-scanner) | [#22](https://github.com/EntEthAlliance/ops-business-scanner/pull/22) | open | Links `editorial.css` from Pages; bridge block onto `--eea-ed-*`; canonical `.eea-site-bar` / `.eea-colophon` markup; ~160 lines of duplicated rules deleted |
-| [ops-policy-friday](https://github.com/EntEthAlliance/ops-policy-friday) | — | not started | Still carries its hand copy |
-| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) | — | not started | Origin site; still inline `<style>` (adopting the file it originated is optional — it is the reference either way) |
+| [ops-policy-friday](https://github.com/EntEthAlliance/ops-policy-friday) |: | not started | Still carries its hand copy |
+| [intelligence.entethalliance.org](https://intelligence.entethalliance.org/) |: | not started | Origin site; still inline `<style>` (adopting the file it originated is optional: it is the reference either way) |
 
 ### Migrating a site
 
@@ -107,7 +106,7 @@ screenshots, following [Adding a new site](#adding-a-new-site).
 ### Isolated sites
 
 Some sites remain permanently outside the design system for regulatory,
-security, or UX reasons — do not add any design-system import to them, ever:
+security, or UX reasons: do not add any design-system import to them, ever:
 
 | Repo | Reason |
 |---|---|
@@ -116,20 +115,20 @@ security, or UX reasons — do not add any design-system import to them, ever:
 
 ---
 
-## Legacy core system (deprecated — frozen)
+## Legacy core system (deprecated: frozen)
 
 The repo previously maintained a dark-first design language: IBM Plex
 Sans/Mono, accent `#627eea`, 12px radii, shadows, `data-theme` dark/light
 theming. **Deprecated 2026-08-25.** Its files (`tokens.css`, `base.css`,
 `nav.css`, `nav.js`, `components.css`) remain served from `main` because the
-sites below hot-link them — removal would break live properties.
+sites below hot-link them: removal would break live properties.
 
 Rules for the legacy layer:
 
 - **Frozen.** No new tokens, no value changes, except fixes required to keep
   the already-adopted sites rendering. The old core token contract
   (stable names, `--eea-` prefix, dark default, load-order safety) continues
-  to hold in freeze — it just no longer grows.
+  to hold in freeze: it just no longer grows.
 - **No new adoptions.** The old tier model (A: full system, B: tokens-only
   bridge) is closed to new entries.
 - **Migrate on touch.** Substantive design work on a legacy site moves it to
@@ -142,12 +141,12 @@ pending migration to the editorial family.
 
 | Repo | Former tier | PR | Notes |
 |---|---|---|---|
-| [ops-finance](https://github.com/EntEthAlliance/ops-finance) | A — full system | [#5](https://github.com/EntEthAlliance/ops-finance/pull/5) | Full system import; ethereum-101 panel redesign |
-| [EntEthAlliance.github.io](https://github.com/EntEthAlliance/EntEthAlliance.github.io) | A — full system | [#16](https://github.com/EntEthAlliance/EntEthAlliance.github.io/pull/16) | tokens.css + IBM Plex Sans; accent → `#627eea` |
-| [pages-index](https://github.com/EntEthAlliance/pages-index) | A — full system | [#1](https://github.com/EntEthAlliance/pages-index/pull/1) | tokens.css; bg/accent/badge/font aligned |
-| [wg-ethereum-institute](https://github.com/EntEthAlliance/wg-ethereum-institute) | B — tokens bridge | [#1](https://github.com/EntEthAlliance/wg-ethereum-institute/pull/1) | tokens.css + bridge block |
-| [rnd-rwa-erc3643-eas](https://github.com/EntEthAlliance/rnd-rwa-erc3643-eas) (Shibui) | B — tokens bridge | [#100](https://github.com/EntEthAlliance/rnd-rwa-erc3643-eas/pull/100) | Brand vars → `#627eea` family; IBM Plex Sans |
-| [ops-solution-catalog](https://github.com/EntEthAlliance/ops-solution-catalog) | B — tokens bridge | [#21](https://github.com/EntEthAlliance/ops-solution-catalog/pull/21) | Tailwind font stack + brand colour |
+| [ops-finance](https://github.com/EntEthAlliance/ops-finance) | A: full system | [#5](https://github.com/EntEthAlliance/ops-finance/pull/5) | Full system import; ethereum-101 panel redesign |
+| [EntEthAlliance.github.io](https://github.com/EntEthAlliance/EntEthAlliance.github.io) | A: full system | [#16](https://github.com/EntEthAlliance/EntEthAlliance.github.io/pull/16) | tokens.css + IBM Plex Sans; accent → `#627eea` |
+| [pages-index](https://github.com/EntEthAlliance/pages-index) | A: full system | [#1](https://github.com/EntEthAlliance/pages-index/pull/1) | tokens.css; bg/accent/badge/font aligned |
+| [wg-ethereum-institute](https://github.com/EntEthAlliance/wg-ethereum-institute) | B: tokens bridge | [#1](https://github.com/EntEthAlliance/wg-ethereum-institute/pull/1) | tokens.css + bridge block |
+| [rnd-rwa-erc3643-eas](https://github.com/EntEthAlliance/rnd-rwa-erc3643-eas) (Shibui) | B: tokens bridge | [#100](https://github.com/EntEthAlliance/rnd-rwa-erc3643-eas/pull/100) | Brand vars → `#627eea` family; IBM Plex Sans |
+| [ops-solution-catalog](https://github.com/EntEthAlliance/ops-solution-catalog) | B: tokens bridge | [#21](https://github.com/EntEthAlliance/ops-solution-catalog/pull/21) | Tailwind font stack + brand colour |
 
 ---
 
@@ -169,7 +168,7 @@ explicitly via PR.
 
 | Version / date | Change |
 |---|---|
-| `1.2.0` — 2026-08-25 | `:focus-visible` states added to the `.eea-site-bar` and `.eea-colophon` links, matching each existing `:hover` state, plus a focus ring (accent on the bar's paper ground, `--eea-ed-deep-hover` mint on the colophon's deep green — the accent is not legible there). Additive: no token changed, and pages that do not use these components are unaffected. |
+| `1.2.0`: 2026-08-25 | `:focus-visible` states added to the `.eea-site-bar` and `.eea-colophon` links, matching each existing `:hover` state, plus a focus ring (accent on the bar's paper ground, `--eea-ed-deep-hover` mint on the colophon's deep green: the accent is not legible there). Additive: no token changed, and pages that do not use these components are unaffected. |
 | 2026-08-25 | **Governance:** editorial family declared the sole design language, aligned with intelligence.entethalliance.org; core system deprecated and frozen. No served value changed. |
-| `1.1.0` — 2026-08-16 | `editorial.css` added — editorial family tokens + `.eea-site-bar` / `.eea-colophon` ([#3](https://github.com/EntEthAlliance/eea-design-system/pull/3)) |
-| `1.0.0` — 2026-07-22 | Initial core-system rollout across 6 sites (now the legacy layer) |
+| `1.1.0`: 2026-08-16 | `editorial.css` added: editorial family tokens + `.eea-site-bar` / `.eea-colophon` ([#3](https://github.com/EntEthAlliance/eea-design-system/pull/3)) |
+| `1.0.0`: 2026-07-22 | Initial core-system rollout across 6 sites (now the legacy layer) |
